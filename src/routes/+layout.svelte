@@ -15,6 +15,9 @@
 		background: #fff;
 		padding: 1rem 2rem;
 
+		@media (prefers-color-scheme: dark) {
+			background: #222;
+		}
 		h1 {
 			font-size: 1.5rem;
 			font-weight: 700;

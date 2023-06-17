@@ -3,7 +3,6 @@
 	import Markdown from 'svelte-exmarkdown';
 	import prism from 'prismjs';
 	import { onMount } from 'svelte';
-	import 'prism-themes/themes/prism-material-light.css';
 	import 'prismjs/components/prism-c.min.js';
 	import 'prismjs/components/prism-cpp.min.js';
 	import 'prismjs/components/prism-typescript.min.js';
@@ -31,12 +30,12 @@
 <svelte:head>
 	<title>{data.page?.title || '404'} - 名前のない走り書き。</title>
 
-  <meta property="twitter:card" content="summary" />
-  <meta property="og:site_name" content="名前のない走り書き。" />
+	<meta property="twitter:card" content="summary" />
+	<meta property="og:site_name" content="名前のない走り書き。" />
 	<meta property="og:title" content={data.page?.title || '404'} />
 	<meta property="og:description" content={description} />
 	<meta property="og:type" content="website" />
-  <meta property="theme-color" content="#48b0d5" />
+	<meta property="theme-color" content="#48b0d5" />
 </svelte:head>
 
 {#if data.page}
@@ -68,6 +67,9 @@
 			color: #666;
 			margin-left: 1rem;
 			display: inline-block;
+			@media (prefers-color-scheme: dark) {
+				color: #888;
+			}
 
 			.monospace {
 				font-family: monospace;

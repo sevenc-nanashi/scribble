@@ -1,7 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@100;400;700&display=swap');
+@import 'prism-themes/themes/prism-material-light.css' screen;
+@import 'prism-themes/themes/prism-material-dark.css' screen and (prefers-color-scheme: dark);
 body {
 	background: #eee;
+	color: #333;
 	margin: 0;
 	padding: 0;
 	font-family: 'M PLUS 1p', sans-serif;
+
+	@media (prefers-color-scheme: dark) {
+		background: #333;
+		color: #eee;
+	}
 }
