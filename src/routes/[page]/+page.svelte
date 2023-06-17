@@ -4,13 +4,13 @@
 	import prism from 'prismjs';
 	import { onMount } from 'svelte';
 	import 'prism-themes/themes/prism-material-light.css';
-  import 'prismjs/components/prism-c.min.js';
-  import 'prismjs/components/prism-cpp.min.js';
-  import 'prismjs/components/prism-typescript.min.js';
-  import 'prismjs/components/prism-bash.min.js';
-  import 'prismjs/components/prism-json.min.js';
-  import 'prismjs/components/prism-ruby.min.js';
-  import 'prismjs/components/prism-python.min.js';
+	import 'prismjs/components/prism-c.min.js';
+	import 'prismjs/components/prism-cpp.min.js';
+	import 'prismjs/components/prism-typescript.min.js';
+	import 'prismjs/components/prism-bash.min.js';
+	import 'prismjs/components/prism-json.min.js';
+	import 'prismjs/components/prism-ruby.min.js';
+	import 'prismjs/components/prism-python.min.js';
 
 	export let data: PageServerData;
 	if (data.page) {
@@ -19,10 +19,23 @@
 			prism.highlightAll();
 		});
 	}
+
+	const description = data.page?.content
+		.replace(/!\[.*?\]\(.*?\)/g, '')
+		.split('\n')
+		.slice(0, 3)
+		.join('\n')
+		.trim();
 </script>
 
 <svelte:head>
 	<title>{data.page?.title || '404'} - 名前のない走り書き。</title>
+
+  <meta property="og:site_name" content="名前のない走り書き。" />
+	<meta property="og:title" content={data.page?.title || '404'} />
+	<meta property="og:description" content={description} />
+	<meta property="og:type" content="website" />
+  <meta property="theme-color" content="#48b0d5" />
 </svelte:head>
 
 {#if data.page}
@@ -72,18 +85,18 @@
 		:global(code) {
 			font-size: 0.9rem;
 		}
-    :global(pre:not([class])) {
-      display: none;
-    }
-    :global(img) {
-      width: 100%;
-      filter: drop-shadow(0 0 0.5rem #ddd);
-      margin: 1rem;
-      display: block;
+		:global(pre:not([class])) {
+			display: none;
+		}
+		:global(img) {
+			width: 100%;
+			filter: drop-shadow(0 0 0.5rem #ddd);
+			margin: 1rem;
+			display: block;
 
-      @media (min-width: 768px) {
-        width: 50%;
-      }
-    }
+			@media (min-width: 768px) {
+				width: 50%;
+			}
+		}
 	}
 </style>
