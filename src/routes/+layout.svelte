@@ -1,3 +1,7 @@
+<script lang="ts">
+	import '../global.scss';
+</script>
+
 <nav>
 	<h1>名前のない走り書き。</h1>
 </nav>
@@ -21,8 +25,8 @@
 	main {
 		padding: 1rem 4rem;
 
-    @media (max-width: 768px) {
-      padding: 1rem 2rem;
-    }
+		@media (max-width: 768px) {
+			padding: 1rem 2rem;
+		}
 	}
 </style>

@@ -4,21 +4,18 @@
 	import prism from 'prismjs';
 	import { onMount } from 'svelte';
 	import 'prism-themes/themes/prism-material-light.css';
+  import 'prismjs/components/prism-c.min.js';
+  import 'prismjs/components/prism-cpp.min.js';
+  import 'prismjs/components/prism-typescript.min.js';
+  import 'prismjs/components/prism-bash.min.js';
+  import 'prismjs/components/prism-json.min.js';
+  import 'prismjs/components/prism-ruby.min.js';
+  import 'prismjs/components/prism-python.min.js';
 
 	export let data: PageServerData;
 	if (data.page) {
 		onMount(async () => {
 			if (!data.page) return;
-			const languages = data.page.content.match(/```([a-z]+)/g)?.map((s) => s.slice(3));
-			if (languages) {
-				languages.sort();
-				for (const lang of languages) {
-					await import(
-						/* @vite-ignore */
-						`/node_modules/prismjs/components/prism-${lang}.js`
-					);
-				}
-			}
 			prism.highlightAll();
 		});
 	}
