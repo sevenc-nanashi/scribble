@@ -7,14 +7,16 @@ const revCache = new Map<string, string[]>();
 const rootCache: {
 	time: number;
 	pages: [id: string, rev: string][];
+	images: [id: string, rev: string][];
 } = {
 	time: 0,
-	pages: []
+	pages: [],
+	images: []
 };
 
 export const load = (async ({ params }) => {
 	const currentTimestamp = Date.now();
-	if (currentTimestamp - rootCache.time > 60 * 5 * 1000) {
+	if (currentTimestamp - rootCache.time > 60 * 1000) {
 		rootCache.time = currentTimestamp;
 		const pagesResp = await fetch(urlcat(env.SYNC_ROOT, '/_all_docs'), {
 			headers: {
@@ -25,8 +27,14 @@ export const load = (async ({ params }) => {
 			.filter(({ id }) => id.startsWith('scribble/') && id.endsWith('.md'))
 			.map(({ id, value: { rev } }) => [id, rev] as [string, string]);
 		rootCache.pages = pageRevs;
+		const imageRevs = pagesResp.rows
+			.filter(({ id }) => id.endsWith('.png'))
+			.map(({ id, value: { rev } }) => [id, rev] as [string, string]);
+		rootCache.images = imageRevs;
 	}
-	const uncachedRevs = rootCache.pages.filter(([, rev]) => !revCache.has(rev));
+	const uncachedRevs = [...rootCache.pages, ...rootCache.images].filter(
+		([, rev]) => !revCache.has(rev)
+	);
 	if (uncachedRevs.length) {
 		const revsResp = await fetch(urlcat(env.SYNC_ROOT, '/_bulk_get'), {
 			method: 'POST',
@@ -51,6 +59,7 @@ export const load = (async ({ params }) => {
 					revCache.delete(docs[0].ok._rev);
 				}
 				rootCache.pages = rootCache.pages.filter(([, rev]) => rev !== docs[0].ok._rev);
+        rootCache.images = rootCache.images.filter(([, rev]) => rev !== docs[0].ok._rev);
 				return;
 			}
 			revCache.set(docs[0].ok._rev, docs[0].ok.children);
@@ -98,10 +107,20 @@ export const load = (async ({ params }) => {
 	}
 	return {
 		page: {
-			content: page.content,
+			content: page.content.replace(/!\[\[(.+?)\]\]/g, (match, p1) => {
+				const image = rootCache.images.find(([id]) => id.endsWith(p1));
+				if (!image) return `\`Unknown image: ${p1}\``;
+				const [, rev] = image;
+				const leafId = revCache.get(rev);
+				if (!leafId) return `\`Unknown image: ${p1}\``;
+				const leaf = leafCache.get(leafId[0]);
+				if (!leaf) return `\`Unknown image: ${p1}\``;
+
+        return `![](data:image/png;base64,${leaf})`;
+			}),
 			title: page.id.replace(/^scribble\//, '').replace(/\.md$/, ''),
 			rev: page.rev,
-      revNo: parseInt(page.rev.split('-')[0])
+			revNo: parseInt(page.rev.split('-')[0])
 		}
 	};
 }) satisfies PageServerLoad;

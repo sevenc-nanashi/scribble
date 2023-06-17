@@ -75,5 +75,8 @@
     :global(pre:not([class])) {
       display: none;
     }
+    :global(img) {
+      width: 100%;
+    }
 	}
 </style>
