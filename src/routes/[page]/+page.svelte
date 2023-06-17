@@ -77,6 +77,9 @@
     }
     :global(img) {
       width: 100%;
+      filter: drop-shadow(0 0 0.5rem #ddd);
+      margin: 1rem;
+      display: block;
 
       @media (min-width: 768px) {
         width: 50%;
