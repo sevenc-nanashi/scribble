@@ -31,6 +31,7 @@
 <svelte:head>
 	<title>{data.page?.title || '404'} - 名前のない走り書き。</title>
 
+  <meta property="twitter:card" content="summary" />
   <meta property="og:site_name" content="名前のない走り書き。" />
 	<meta property="og:title" content={data.page?.title || '404'} />
 	<meta property="og:description" content={description} />
