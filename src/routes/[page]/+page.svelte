@@ -79,7 +79,7 @@
 		line-height: 1.5;
 		:global(ul) {
 			padding: 0;
-			padding-left: 1rem;
+			padding-left: 2rem;
 			margin: 0;
 			line-height: 1.75;
 		}
