@@ -100,6 +100,10 @@
 			@media (min-width: 768px) {
 				width: 50%;
 			}
+
+      @media (prefers-color-scheme: dark) {
+        filter: drop-shadow(0 0 0.5rem #333);
+      }
 		}
 	}
 </style>
