@@ -95,6 +95,16 @@
 			word-break: break-all;
 			white-space: pre-wrap;
 		}
+		:global(a) {
+			color: #48b0d5;
+
+			&:hover {
+				filter: drop-shadow(0 0 0.5rem #48b0d588);
+				@media (prefers-color-scheme: dark) {
+					filter: drop-shadow(0 0 0.5rem #48b0d5cc);
+				}
+			}
+		}
 		:global(img) {
 			width: 100%;
 			box-sizing: border-box;
