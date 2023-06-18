@@ -91,9 +91,13 @@
 		:global(pre:not([class])) {
 			display: none;
 		}
+		:global(p) {
+			word-break: break-all;
+			white-space: pre-wrap;
+		}
 		:global(img) {
 			width: 100%;
-      box-sizing: border-box;
+			box-sizing: border-box;
 			filter: drop-shadow(0 0 0.5rem #ddd);
 			padding: 1rem 0;
 			display: block;
@@ -102,9 +106,9 @@
 				width: 50%;
 			}
 
-      @media (prefers-color-scheme: dark) {
-        filter: drop-shadow(0 0 0.5rem #333);
-      }
+			@media (prefers-color-scheme: dark) {
+				filter: drop-shadow(0 0 0.5rem #333);
+			}
 		}
 	}
 </style>
