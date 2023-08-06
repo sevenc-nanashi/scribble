@@ -28,7 +28,7 @@ export const load = (async ({ params }) => {
 			.map(({ id, value: { rev } }) => [id, rev] as [string, string]);
 		rootCache.pages = pageRevs;
 		const imageRevs = pagesResp.rows
-			.filter(({ id }) => id.endsWith(/\.(png|jpg)/))
+			.filter(({ id }) => id.match(/\.(png|jpg)$/))
 			.map(({ id, value: { rev } }) => [id, rev] as [string, string]);
 		rootCache.images = imageRevs;
 	}
