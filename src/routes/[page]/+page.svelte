@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageServerData } from './$types';
-	import Markdown from 'svelte-exmarkdown';
+	import MarkdownIt from 'markdown-it';
 	import prism from 'prismjs';
 	import { onMount } from 'svelte';
 	import 'prismjs/components/prism-c.min.js';
@@ -19,16 +19,19 @@
 		});
 	}
 
-	const description = data.page?.content
+	const description = data.page.content
 		.replace(/!\[.*?\]\(.*?\)/g, '')
 		.split('\n')
 		.slice(0, 3)
 		.join('\n')
 		.trim();
+
+	const markdownIt = new MarkdownIt();
+	const markdownHtml = markdownIt.render(data.page.content);
 </script>
 
 <svelte:head>
-	<title>{data.page?.title || '404'} - 名前のない走り書き。</title>
+	<title>{data.page.title} - 名前のない走り書き。</title>
 
 	<meta property="twitter:card" content="summary" />
 	<meta property="og:site_name" content="名前のない走り書き。" />
@@ -45,7 +48,7 @@
 			<span class="rev">版：{data.page.revNo} (<span class="monospace">{data.page.rev}</span>)</span
 			>
 		</header>
-		<Markdown md={data.page.content} />
+		{@html markdownHtml}
 	</article>
 {:else}
 	<p>ページが見つかりませんでした。</p>

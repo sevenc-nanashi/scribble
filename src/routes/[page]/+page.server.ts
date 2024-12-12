@@ -1,6 +1,7 @@
 import * as env from '$env/static/private';
+import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import urlcat from 'urlcat';
+import { pathcat } from 'pathcat';
 
 const leafCache = new Map<string, string>();
 const revCache = new Map<string, string[]>();
@@ -18,7 +19,7 @@ export const load = (async ({ params }) => {
 	const currentTimestamp = Date.now();
 	if (currentTimestamp - rootCache.time > 60 * 1000) {
 		rootCache.time = currentTimestamp;
-		const pagesResp = await fetch(urlcat(env.SYNC_ROOT, '/_all_docs'), {
+		const pagesResp = await fetch(pathcat(env.SYNC_ROOT, '/_all_docs'), {
 			headers: {
 				Authorization: `Basic ${btoa(`${env.SYNC_USER}:${env.SYNC_PASS}`)}`
 			}
@@ -36,7 +37,7 @@ export const load = (async ({ params }) => {
 		([, rev]) => !revCache.has(rev)
 	);
 	if (uncachedRevs.length) {
-		const revsResp = await fetch(urlcat(env.SYNC_ROOT, '/_bulk_get'), {
+		const revsResp = await fetch(pathcat(env.SYNC_ROOT, '/_bulk_get'), {
 			method: 'POST',
 			headers: {
 				Authorization: `Basic ${btoa(`${env.SYNC_USER}:${env.SYNC_PASS}`)}`,
@@ -59,7 +60,7 @@ export const load = (async ({ params }) => {
 					revCache.delete(docs[0].ok._rev);
 				}
 				rootCache.pages = rootCache.pages.filter(([, rev]) => rev !== docs[0].ok._rev);
-        rootCache.images = rootCache.images.filter(([, rev]) => rev !== docs[0].ok._rev);
+				rootCache.images = rootCache.images.filter(([, rev]) => rev !== docs[0].ok._rev);
 				return;
 			}
 			revCache.set(docs[0].ok._rev, docs[0].ok.children);
@@ -70,7 +71,7 @@ export const load = (async ({ params }) => {
 		.flat()
 		.filter((id) => !leafCache.has(id));
 	if (uncachedLeaves.length) {
-		const leavesResp = await fetch(urlcat(env.SYNC_ROOT, '/_bulk_get'), {
+		const leavesResp = await fetch(pathcat(env.SYNC_ROOT, '/_bulk_get'), {
 			method: 'POST',
 			headers: {
 				Authorization: `Basic ${btoa(`${env.SYNC_USER}:${env.SYNC_PASS}`)}`,
@@ -101,14 +102,13 @@ export const load = (async ({ params }) => {
 	}));
 	const page = pages.find(({ id }) => id === `scribble/${params.page}.md`);
 	if (!page) {
-		return {
-			page: undefined
-		};
+		return error(404, 'Not Found');
 	}
 	return {
 		page: {
 			content: page.content.replace(/!\[\[(.+?)\]\]/g, (match, p1) => {
 				const image = rootCache.images.find(([id]) => id.endsWith(p1));
+				console.log(image);
 				if (!image) return `\`Unknown image: ${p1}\``;
 				const [, rev] = image;
 				const leafId = revCache.get(rev);
@@ -116,7 +116,7 @@ export const load = (async ({ params }) => {
 				const leaf = leafCache.get(leafId[0]);
 				if (!leaf) return `\`Unknown image: ${p1}\``;
 
-        return `![](data:image/png;base64,${leaf})`;
+				return `![](data:image/png;base64,${leaf})`;
 			}),
 			title: page.id.replace(/^scribble\//, '').replace(/\.md$/, ''),
 			rev: page.rev,
