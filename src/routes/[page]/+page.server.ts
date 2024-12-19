@@ -12,7 +12,7 @@ export const load = (async ({ params }) => {
 		page: {
 			content: page.content.replace(/!\[\[(.+?)\]\]/g, (_match, p1) => {
 				const image = rootCache.images.find(([id]) => id.endsWith(p1));
-				if (!image) return `\`\`\`Unknown image: ${p1}\`\`\``;
+				if (!image) return `\`\`\`\nUnknown Image: ${p1}\n\`\`\``;
 				const [, rev] = image;
 				return `![\`${p1}\`](/images/${rev})`;
 			}),
