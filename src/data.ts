@@ -1,7 +1,6 @@
 import { pathcat } from 'pathcat';
 import * as env from '$env/static/private';
 import { fromByteArray } from 'base64-js';
-const currentTimestamp = Date.now();
 
 const leafCache = new Map<string, string>();
 const revCache = new Map<string, string[]>();
@@ -24,6 +23,7 @@ const rootCache: {
 
 const imageExtensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
 export const loadDb = async () => {
+	const currentTimestamp = Date.now();
 	if (currentTimestamp - rootCache.time > 60 * 1000) {
 		rootCache.time = currentTimestamp;
 		const pagesResp = await fetch(pathcat(env.SYNC_ROOT, '/_all_docs'), {
