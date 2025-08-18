@@ -26,7 +26,9 @@
 		.join('\n')
 		.trim();
 
-	const markdownIt = new MarkdownIt();
+	const markdownIt = new MarkdownIt({
+		html: true
+	});
 	const markdownHtml = markdownIt.render(data.page.content);
 </script>
 
