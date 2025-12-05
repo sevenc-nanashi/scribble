@@ -3,6 +3,7 @@
 	import MarkdownIt from 'markdown-it';
 	import prism from 'prismjs';
 	import { onMount } from 'svelte';
+	import { katex } from '@mdit/plugin-katex';
 	import 'prismjs/components/prism-c.min.js';
 	import 'prismjs/components/prism-cpp.min.js';
 	import 'prismjs/components/prism-typescript.min.js';
@@ -10,6 +11,7 @@
 	import 'prismjs/components/prism-json.min.js';
 	import 'prismjs/components/prism-ruby.min.js';
 	import 'prismjs/components/prism-python.min.js';
+	import 'katex/dist/katex.min.css';
 
 	export let data: PageServerData;
 	if (data.page) {
@@ -28,7 +30,7 @@
 
 	const markdownIt = new MarkdownIt({
 		html: true
-	});
+	}).use(katex);
 	const markdownHtml = markdownIt.render(data.page.content);
 </script>
 
@@ -62,7 +64,7 @@
 		margin-bottom: 1rem;
 		border-bottom: 1px solid #ccc;
 		h1 {
-			font-size: 1.5rem;
+			font-size: 1.5em;
 			padding: 0;
 			margin: 0;
 			display: inline-block;
@@ -99,6 +101,17 @@
 		:global(p) {
 			word-break: break-all;
 			white-space: pre-wrap;
+		}
+		:global(blockquote) {
+			border-left: 0.3rem solid #ccc;
+			margin-left: 0;
+			margin-right: 0;
+			padding-left: 1rem;
+			color: #666;
+			font-size: 0.9em;
+			@media (prefers-color-scheme: dark) {
+				color: #888;
+			}
 		}
 		:global(a) {
 			color: #48b0d5;
