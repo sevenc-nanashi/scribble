@@ -12,25 +12,25 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^3.3.1",
-		"@sveltejs/kit": "^2.10.1",
-		"@sveltejs/vite-plugin-svelte": "^5.0.2",
+		"@sveltejs/adapter-auto": "^7.0.0",
+		"@sveltejs/kit": "^2.49.1",
+		"@sveltejs/vite-plugin-svelte": "^6.2.1",
 		"@types/markdown-it": "^14.1.2",
 		"@types/prismjs": "1.26.5",
-		"@typescript-eslint/eslint-plugin": "^8.18.0",
-		"@typescript-eslint/parser": "^8.18.0",
-		"eslint": "^9.16.0",
-		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-svelte": "^2.46.1",
-		"prettier": "^3.4.2",
-		"prettier-plugin-svelte": "^3.3.2",
-		"sass": "^1.82.0",
-		"svelte": "^5.11.2",
-		"svelte-check": "^4.1.1",
+		"@typescript-eslint/eslint-plugin": "^8.48.1",
+		"@typescript-eslint/parser": "^8.48.1",
+		"eslint": "^9.39.1",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-svelte": "^3.13.1",
+		"prettier": "^3.7.4",
+		"prettier-plugin-svelte": "^3.4.0",
+		"sass": "^1.94.2",
+		"svelte": "^5.45.5",
+		"svelte-check": "^4.3.4",
 		"svelte-preprocess": "^6.0.3",
 		"tslib": "^2.8.1",
-		"typescript": "^5.7.2",
-		"vite": "^6.0.3"
+		"typescript": "^5.9.3",
+		"vite": "^7.2.6"
 	},
 	"type": "module",
 	"dependencies": {
@@ -39,9 +39,9 @@
 		"expiry-map": "^2.0.0",
 		"katex": "^0.16.25",
 		"markdown-it": "^14.1.0",
-		"octagonal-wheels": "^0.1.19",
-		"pathcat": "^1.4.0",
+		"octagonal-wheels": "^0.1.45",
+		"pathcat": "^1.5.1",
 		"prism-themes": "^1.9.0",
-		"prismjs": "1.29.0"
+		"prismjs": "1.30.0"
 	}
 }
