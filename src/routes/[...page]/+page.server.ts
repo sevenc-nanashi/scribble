@@ -4,7 +4,7 @@ import { loadDb } from '../../data';
 
 export const load = (async ({ params }) => {
 	const { pages, rootCache } = await loadDb();
-	const page = pages.find(({ id }) => id === `scribble/${params.page}.md`);
+	const page = pages.find(({ id }) => id === `scribble/${params.page.toLowerCase()}.md`);
 	if (!page) {
 		return error(404, 'Not Found');
 	}
