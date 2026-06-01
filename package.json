@@ -1,0 +1,19 @@
+{
+  "name": ".",
+  "scripts": {
+    "dev": "vike dev",
+    "build": "vike build",
+    "preview": "vike build && vike preview"
+  },
+  "dependencies": {
+    "vike": "0.4.259",
+    "vike-vue": "^0.9.11",
+    "vue": "^3.5.34"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.7",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.14"
+  },
+  "type": "module"
+}
