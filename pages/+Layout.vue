@@ -1,22 +1,19 @@
 <!-- https://vike.dev/Layout -->
 
 <template>
-  <div class="layout">
-    <Sidebar>
-      <Logo />
-      <Link href="/"> Welcome </Link>
-      <Link href="/todo"> Todo </Link>
-      <Link href="/star-wars"> Data Fetching </Link>
-    </Sidebar>
-    <Content><slot /></Content>
+  <div class="layout" un-font="sans">
+    <Header />
+    <main un-p="x-5 y-2">
+      <slot />
+    </main>
   </div>
 </template>
 
 <script lang="ts" setup>
-import Content from "../components/Content.vue";
-import Link from "../components/Link.vue";
-import Logo from "../components/Logo.vue";
-import Sidebar from "../components/Sidebar.vue";
+import "virtual:uno.css";
+import "@fontsource/m-plus-1p/japanese.css";
+import "@fontsource/m-plus-1p/japanese-700.css";
+import Header from "../components/Header.vue";
 </script>
 
 <style>
@@ -35,14 +32,7 @@ a {
 <style scoped>
 .layout {
   display: flex;
-  max-width: 900px;
-  margin: auto;
-}
-.content {
-  padding: 20px;
-  padding-bottom: 50px;
-  min-height: 100vh;
-  flex-grow: 1;
+  flex-direction: column;
 }
 /* Page Transition Animation */
 #page-content {
